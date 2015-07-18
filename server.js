@@ -6,6 +6,14 @@ const Router = require('react-router');
 const routes = require('./routes');
 const app = express();
 
+app.use(function(req, res, next) {
+  if (req.path === '/favicon.ico') {
+    return res.status(404).end();
+  }
+
+  next();
+});
+
 app.use(function(req, res) {
   Router.run(routes, req.path, function(Handler) {
     res.send(React.renderToString(<Handler path={req.path} />));

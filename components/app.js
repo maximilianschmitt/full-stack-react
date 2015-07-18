@@ -11,7 +11,7 @@ class App extends React.Component {
       <html>
         <head>
           <title>Isomorphic React</title>
-          <meta charset="utf-8" />
+          <meta charSet="utf-8" />
         </head>
         <body>
           <ul>
