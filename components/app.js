@@ -10,7 +10,7 @@ class App extends React.Component {
     return (
       <html>
         <head>
-          <title>Isomorphic React</title>
+          <title>Server-Side React</title>
           <meta charSet="utf-8" />
         </head>
         <body>
