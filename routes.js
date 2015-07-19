@@ -7,13 +7,13 @@ const React = require('react');
 const Router = require('react-router');
 const App = require('./components/app');
 const Home = require('./components/home');
-const About = require('./components/about');
+const Ip = require('./components/ip');
 const Route = Router.Route;
 
 const routes = (
   <Route handler={App}>
     <Route name="home" path="/" handler={Home} />
-    <Route name="about" path="/about" handler={About} />
+    <Route name="ip" path="/ip" handler={Ip} />
   </Route>
 );
 

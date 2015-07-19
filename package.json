@@ -3,9 +3,11 @@
     "start": "babel-node server"
   },
   "dependencies": {
+    "axios": "^0.5.4",
     "express": "^4.13.1",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "rsvp": "^3.0.18"
   },
   "devDependencies": {
     "babel": "^5.6.23"
