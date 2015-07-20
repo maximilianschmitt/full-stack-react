@@ -2,10 +2,6 @@
 
 A minimal sample full-stack React app using [express](http://expressjs.com/), [iso](https://github.com/goatslacker/iso) and [react-router](http://rackt.github.io/react-router/).
 
-## Preface
-
-I made this app to understand how full-stack React works while doing my best to keep the code easy-to-follow. The real work happens in `server.js` when `react-router` runs. The system isn't perfect yet, but I think it works alright for a simple app. I'm very interested in suggestions how I could make this better, so feel free to contact me or open an issue if you have any feedback!
-
 ## Async data fetching
 
 One of the biggest challenges with full-stack react for me was/is asynchronous data fetching before rendering on the server while keeping components as pure as possible. Let me try and explain how I approached it:
@@ -42,7 +38,7 @@ Ip.prepareForRequest = function() {
 };
 ```
 
-In `server.js` there are a few lines of code that make this possible. If the `Ip` component had a child `RouteHandler` with its own `prepareForRequest` method, it could pass through the child state through props:
+In `server.js` there are about 10 lines of code that make this possible. If the `Ip` component had a child `RouteHandler` with its own `prepareForRequest` method, it could pass through the child state through props:
 
 ```jsx
 <RouteHandler initialState={this.props.initialState.child} />
