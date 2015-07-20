@@ -1,6 +1,6 @@
 # full-stack-react
 
-A minimal sample full-stack React app using [express](http://expressjs.com/), [iso](https://github.com/goatslacker/iso) and [react-router](http://rackt.github.io/react-router/).
+A minimal sample full-stack React app using [express](http://expressjs.com/), [iso](https://github.com/goatslacker/iso), [react-router](http://rackt.github.io/react-router/) and [iniquest](https://github.com/maximilianschmitt/iniquest).
 
 ## Async data fetching
 
@@ -20,28 +20,22 @@ Every `RouteHandler` can optionally implement a `static` method called `prepareF
 
 ```javascript
 class Ip extends React.Component {
-  componentWillMount() {
-    if (!this.props.initialState || !this.props.initialState.self) {
-      return;
-    }
-
-    this.setState(this.props.initialState.self);
-  }
-
   render() {
     return <div>Your ip is: {this.state.ip}</div>;
   }
 }
+
+mixin.onClass(Ip, iniquest.InitialStateFromProps);
 
 Ip.prepareForRequest = function() {
   return axios.get('http://ip.jsontest.com').then(res => res.data);
 };
 ```
 
-In `server.js` there are about 10 lines of code that make this possible. If the `Ip` component had a child `RouteHandler` with its own `prepareForRequest` method, it could pass through the child state through props:
+In `server.js` there are about 10 lines of code that make this possible. If the `Ip` component had a child `RouteHandler` with its own `prepareForRequest` method, it could pass through the child state through props by mixing in `iniquest.InitialChildState`.
 
 ```jsx
-<RouteHandler initialState={this.props.initialState.child} />
+<RouteHandler initialState={this.initialChildState} />
 ```
 
 ## Installation
@@ -57,13 +51,3 @@ $ npm start
 ```
 
 The server will listen on port `3000` or the one specified in the environment variable `PORT`.
-
-## Todo
-
-1. Add ability for parent `RouteHandler`s to pass params to the `prepareForRequest` of a child `RouteHandler`, maybe like this:
-    ```javascript
-    Component.prepareChildForRequest(initialState, childRoute) : opts
-    Component.prepareForRequest(req, opts) : initialState
-    ```
-
-2. Find a simple solution so that (1) can optionally run `prepareForRequest`-calls in parallel if `opts` for the child's preparation are not dependent on the parent's `prepareForRequest`
