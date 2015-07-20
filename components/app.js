@@ -12,19 +12,14 @@ class App extends React.Component {
     const routeProps = this.props.data[routeName];
 
     return (
-      <html>
-        <head>
-          <title>Server-Side React</title>
-          <meta charSet="utf-8" />
-        </head>
-        <body>
-          <ul>
-            <li><Link to="home">Home</Link></li>
-            <li><Link to="ip">Ip</Link></li>
-          </ul>
-          <RouteHandler {...routeProps} />
-        </body>
-      </html>
+      <div className="app">
+        <ul>
+          <li><Link to="home">Home</Link></li>
+          <li><Link to="ip">Ip</Link></li>
+          <li><Link to="markdown">Markdown</Link></li>
+        </ul>
+        <RouteHandler initialState={routeProps} />
+      </div>
     );
   }
 }
