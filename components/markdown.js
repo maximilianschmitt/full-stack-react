@@ -11,11 +11,11 @@ class Markdown extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.initialState) {
+    if (!this.props.initialState || !this.props.initialState.self) {
       return;
     }
 
-    this.setState(this.props.initialState);
+    this.setState(this.props.initialState.self);
   }
 
   onSubmit(e) {

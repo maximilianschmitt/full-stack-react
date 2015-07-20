@@ -7,9 +7,9 @@ const Link = Router.Link;
 
 class App extends React.Component {
   render() {
-    const currentRoutes = this.context.router.getCurrentRoutes();
-    const routeName = currentRoutes[currentRoutes.length - 1].name;
-    const routeProps = this.props.data[routeName];
+    const initialState = this.props.initialState
+      ? this.props.initialState.child
+      : {};
 
     return (
       <div className="app">
@@ -18,7 +18,8 @@ class App extends React.Component {
           <li><Link to="ip">Ip</Link></li>
           <li><Link to="markdown">Markdown</Link></li>
         </ul>
-        <RouteHandler initialState={routeProps} />
+
+        <RouteHandler initialState={initialState} />
       </div>
     );
   }

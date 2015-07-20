@@ -25,15 +25,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function(req, res, next) {
   const iso = new Iso();
   Router.run(routes, req.path, function(Handler, state) {
-    const fetches = state.routes
-      .filter(route => !!route.handler.prepareForRequest)
-      .reduce((requests, route) => {
-        requests[route.name] = route.handler.prepareForRequest(req);
-        return requests;
-      }, {});
+    const fetches = state.routes.slice().reverse().reduce((initialState, route) => {
+      initialState.self = route.handler.prepareForRequest
+        ? route.handler.prepareForRequest(req) || null
+        : null;
+      const parent = { child: RSVP.hash(initialState) };
 
-    RSVP.hash(fetches).then(data => {
-      iso.add(React.renderToString(<Handler data={data} />), data);
+      return parent;
+    }, {});
+
+    fetches.child.then(data => {
+      iso.add(React.renderToString(<Handler initialState={data} />), data);
       res.send(renderHtml(iso.render()));
     }).catch(next);
   });
