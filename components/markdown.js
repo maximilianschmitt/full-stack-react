@@ -2,20 +2,14 @@
 
 const React = require('react');
 const axios = require('axios');
+const mixin = require('react-mixin');
+const iniquest = require('iniquest');
 const serialize = require('form-serialize');
 
 class Markdown extends React.Component {
   constructor() {
     super();
     this.state = { markdown: '', rendered: '' };
-  }
-
-  componentWillMount() {
-    if (!this.props.initialState || !this.props.initialState.self) {
-      return;
-    }
-
-    this.setState(this.props.initialState.self);
   }
 
   onSubmit(e) {
@@ -39,6 +33,8 @@ class Markdown extends React.Component {
     );
   }
 }
+
+mixin.onClass(Markdown, iniquest.InitialStateFromProps);
 
 Markdown.postData = function(data) {
   return axios

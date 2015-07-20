@@ -1,16 +1,14 @@
 'use strict';
 
 const React = require('react');
+const mixin = require('react-mixin');
+const iniquest = require('iniquest');
 const Router = require('react-router')
 const RouteHandler = Router.RouteHandler;
 const Link = Router.Link;
 
 class App extends React.Component {
   render() {
-    const initialState = this.props.initialState
-      ? this.props.initialState.child
-      : {};
-
     return (
       <div className="app">
         <ul>
@@ -19,14 +17,12 @@ class App extends React.Component {
           <li><Link to="markdown">Markdown</Link></li>
         </ul>
 
-        <RouteHandler initialState={initialState} />
+        <RouteHandler initialState={this.initialChildState()} />
       </div>
     );
   }
 }
 
-App.contextTypes = {
-  router: React.PropTypes.func.isRequired
-};
+mixin.onClass(App, iniquest.InitialChildState);
 
 module.exports = App;

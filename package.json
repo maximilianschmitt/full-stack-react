@@ -7,8 +7,10 @@
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "form-serialize": "^0.6.0",
+    "iniquest": "0.0.1",
     "iso": "^4.1.0",
     "react": "^0.13.3",
+    "react-mixin": "^1.6.0",
     "react-router": "^0.13.3",
     "rsvp": "^3.0.18"
   },

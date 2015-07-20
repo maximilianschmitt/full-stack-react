@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const RSVP = require('rsvp');
+const iniquest = require('iniquest');
 const Iso = require('iso');
 const React = require('react');
 const Router = require('react-router');
@@ -25,17 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function(req, res, next) {
   const iso = new Iso();
   Router.run(routes, req.path, function(Handler, state) {
-    const fetches = state.routes.slice().reverse().reduce((initialState, route) => {
-      initialState.self = route.handler.prepareForRequest
-        ? route.handler.prepareForRequest(req) || null
-        : null;
-      const parent = { child: RSVP.hash(initialState) };
-
-      return parent;
-    }, {});
-
-    fetches.child.then(data => {
-      iso.add(React.renderToString(<Handler initialState={data} />), data);
+    iniquest.run(state, req).then(initialState => {
+      iso.add(React.renderToString(<Handler initialState={initialState} />), initialState);
       res.send(renderHtml(iso.render()));
     }).catch(next);
   });

@@ -2,19 +2,13 @@
 
 const React = require('react');
 const axios = require('axios');
+const iniquest = require('iniquest');
+const mixin = require('react-mixin');
 
 class Ip extends React.Component {
   constructor() {
     super();
     this.state = { ip: null };
-  }
-
-  componentWillMount() {
-    if (!this.props.initialState || !this.props.initialState.self) {
-      return;
-    }
-
-    this.setState(this.props.initialState.self);
   }
 
   componentDidMount() {
@@ -29,6 +23,8 @@ class Ip extends React.Component {
     return <div>Your ip is: {this.state.ip}</div>;
   }
 }
+
+mixin.onClass(Ip, iniquest.InitialStateFromProps);
 
 Ip.fetchData = function() {
   return axios.get('http://ip.jsontest.com').then(res => res.data);
